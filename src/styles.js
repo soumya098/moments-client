@@ -32,6 +32,9 @@ export default makeStyles((theme) => ({
 			display: "none",
 		},
 	},
+	mainContainer: {
+		marginTop: theme.spacing(2),
+	},
 	image: {
 		maxWidth: "4rem",
 		height: "auto",
