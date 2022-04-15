@@ -1,33 +1,27 @@
 import React from "react";
-import { Card, CardHeader, CardActions, CardContent, CardMedia, Typography, IconButton, Avatar } from "@material-ui/core";
+import { Card, CardActions, CardContent, CardMedia, Typography, IconButton } from "@material-ui/core";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import DeleteIcon from "@material-ui/icons/Delete";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import moment from "moment";
 import useStyles from "./styles";
 
-const Post = ({ post }) => {
+const Post = ({ post, setPostId }) => {
 	const classes = useStyles();
-	console.log(post._id);
 	return (
 		<Card className={classes.card}>
-			{/* <CardHeader
-				avatar={<Avatar aria-label="recipe">{post.creator[0]}</Avatar>}
-				action={
-					<IconButton>
-						<MoreHorizIcon />
-					</IconButton>
-				}
-				title={post.title}
-				subheader="September 14, 2016"
-			/> */}
 			<CardMedia className={classes.media} image={post.imageFile} title={post.title} />
 			<div className={classes.overlay}>
 				<Typography variant="h6">{post.creator}</Typography>
-				<Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
+				<Typography variant="body2">{moment(post.updatedAt).fromNow()}</Typography>
 			</div>
 			<div className={classes.overlay2}>
-				<IconButton style={{ color: "white" }} size="small" onClick={() => alert("btn clicked")}>
+				<IconButton
+					style={{ color: "white" }}
+					onClick={() => {
+						setPostId(post._id);
+					}}
+				>
 					<MoreHorizIcon />
 				</IconButton>
 			</div>

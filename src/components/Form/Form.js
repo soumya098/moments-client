@@ -1,11 +1,11 @@
-import React, { useState, useRef } from "react";
-import { useDispatch } from "react-redux";
-import { createPost } from "../../actions/postsActionCreators";
+import React, { useState, useRef, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { createPost, updatePost } from "../../actions/postsActionCreators";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
 // import FileBase from "react-file-base64";
 import useStyles from "./styles";
 
-const Form = () => {
+const Form = ({ postId, setPostId }) => {
 	const classes = useStyles();
 	const fileRef = useRef();
 	const dispatch = useDispatch();
@@ -19,6 +19,17 @@ const Form = () => {
 		imageFile: "",
 	});
 
+	const [formTitle, setFormTitle] = useState("Create");
+	const post = useSelector((store) => (postId ? store.posts.find((p) => p._id === postId) : null));
+
+	useEffect(() => {
+		if (post) {
+			setFormTitle("Update");
+			setDisable(false);
+			setformData(post);
+		}
+	}, [post]);
+
 	const clearForm = () => {
 		fileRef.current.value = "";
 		setformData({
@@ -29,6 +40,7 @@ const Form = () => {
 			imageFile: "",
 		});
 		setDisable(true);
+		setPostId(null);
 	};
 
 	const uploadImage = async (e) => {
@@ -48,8 +60,11 @@ const Form = () => {
 	};
 
 	const handleSubmit = (e) => {
-		console.log(formData);
-		dispatch(createPost(formData));
+		if (postId) {
+			dispatch(updatePost(postId, formData));
+		} else {
+			dispatch(createPost(formData));
+		}
 		clearForm();
 		e.preventDefault();
 	};
@@ -57,7 +72,7 @@ const Form = () => {
 	return (
 		<Paper className={classes.paper}>
 			<form className={`${classes.form} ${classes.root}`} onSubmit={handleSubmit}>
-				<Typography variant="h6">Create new Memories</Typography>
+				<Typography variant="h6">{formTitle} new Memories</Typography>
 				<TextField
 					name="creator"
 					label="Creator"
@@ -106,10 +121,10 @@ const Form = () => {
 					<FileBase type="file" multiple={false} onDone={({ base64 }) => setformData({ ...formData, imageFile: base64 })} />
 				</div> */}
 				<div className={classes.fileInput}>
-					<input ref={fileRef} type="file" multiple={false} onChange={(e) => uploadImage(e)} required />
+					<input ref={fileRef} type="file" multiple={false} onChange={(e) => uploadImage(e)} />
 				</div>
 				<Button className={classes.btnSubmit} variant="contained" color="primary" size="small" type="submit" disabled={disable}>
-					submit
+					{formTitle}
 				</Button>
 				<Button className={classes.btnSubmit} variant="outlined" color="secondary" size="small" onClick={clearForm}>
 					clear

@@ -8,6 +8,8 @@ const postsReducer = (state = initialState, action) => {
 			return action.payload;
 		case actionTypes.CREATE:
 			return [...state, action.payload];
+		case actionTypes.UPDATE:
+			return state.map((item) => (item._id === action.payload._id ? action.payload : item));
 		default:
 			return state;
 	}
