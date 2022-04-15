@@ -1,15 +1,11 @@
 import axios from "axios";
 
-const url = "http://localhost:5000/posts";
+const url = "http://localhost:5000";
 //const url = "https://memories-backend-server.herokuapp.com/posts";
 
-export const fetchPosts = () => axios.get(url);
-export const createPost = (newPost) => axios.post(url, newPost);
-export const updatePost = (id, updatedPost) => axios.patch(`${url}/${id}`, updatedPost);
-
-// const API = axios.create({
-// 	baseURL: "https://memories-backend-server.herokuapp.com",
-// });
+const API = axios.create({
+	baseURL: url,
+});
 
 // API.interceptors.request.use((req) => {
 // 	if (localStorage.getItem("profile")) {
@@ -18,10 +14,10 @@ export const updatePost = (id, updatedPost) => axios.patch(`${url}/${id}`, updat
 // 	return req;
 // });
 
-// export const fetchPosts = () => API.get("/posts");
-// export const createPosts = (newPost) => API.post("/posts", newPost);
-// export const updatePosts = (id, updatedPost) => API.patch(`/posts/${id}`, updatedPost);
-// export const deletePost = (id) => API.delete(`/posts/${id}`);
+export const fetchPosts = () => API.get("/posts");
+export const createPost = (newPost) => API.post("/posts", newPost);
+export const updatePost = (id, updatedPost) => API.patch(`/posts/${id}`, updatedPost);
+export const deletePost = (id) => API.delete(`/posts/${id}`);
 // export const likePost = (id) => API.patch(`/posts/${id}/like`);
 
 // //for auth

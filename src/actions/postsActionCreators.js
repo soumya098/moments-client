@@ -14,7 +14,7 @@ export const getPosts = () => async (dispatch) => {
 		const action = { type: actionTypes.FETCH_ALL, payload: data };
 		dispatch(action);
 	} catch (error) {
-		console.log(error.message);
+		console.log(error);
 	}
 };
 
@@ -24,7 +24,7 @@ export const createPost = (post) => async (dispatch) => {
 		const action = { type: actionTypes.CREATE, payload: data };
 		dispatch(action);
 	} catch (error) {
-		console.log(error.message);
+		console.log(error);
 	}
 };
 
@@ -34,6 +34,16 @@ export const updatePost = (id, post) => async (dispatch) => {
 		const action = { type: actionTypes.UPDATE, payload: data };
 		dispatch(action);
 	} catch (error) {
-		console.log(error.message);
+		console.log(error);
+	}
+};
+
+export const deletePost = (id) => async (dispatch) => {
+	try {
+		await api.deletePost(id);
+		const action = { type: actionTypes.DELETE, payload: id };
+		dispatch(action);
+	} catch (error) {
+		console.log(error);
 	}
 };
