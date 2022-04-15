@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 export default makeStyles((theme) => ({
-	[theme.breakpoints.only("xs")]: {
+	[theme.breakpoints.down("sm")]: {
 		mainContainer: { flexDirection: "column-reverse !important" },
 		heading: { fontSize: "1.8rem !important" },
 		image: { maxWidth: "2.4rem !important" },

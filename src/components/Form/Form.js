@@ -10,6 +10,7 @@ const Form = () => {
 	const fileRef = useRef();
 	const dispatch = useDispatch();
 
+	const [disable, setDisable] = useState(true);
 	const [formData, setformData] = useState({
 		creator: "",
 		title: "",
@@ -27,12 +28,14 @@ const Form = () => {
 			tags: "",
 			imageFile: "",
 		});
+		setDisable(true);
 	};
 
 	const uploadImage = async (e) => {
 		const file = e.target.files[0];
 		const base64 = await converBase64(file);
 		setformData({ ...formData, imageFile: base64 });
+		setDisable(false);
 	};
 
 	const converBase64 = (file) => {
@@ -46,8 +49,8 @@ const Form = () => {
 
 	const handleSubmit = (e) => {
 		console.log(formData);
-		clearForm();
 		dispatch(createPost(formData));
+		clearForm();
 		e.preventDefault();
 	};
 
@@ -61,7 +64,10 @@ const Form = () => {
 					variant="outlined"
 					fullWidth
 					value={formData.creator}
-					onChange={(e) => setformData({ ...formData, creator: e.target.value })}
+					onChange={(e) => {
+						setformData({ ...formData, creator: e.target.value });
+						setDisable(false);
+					}}
 				/>
 				<TextField
 					name="title"
@@ -69,7 +75,10 @@ const Form = () => {
 					variant="outlined"
 					fullWidth
 					value={formData.title}
-					onChange={(e) => setformData({ ...formData, title: e.target.value })}
+					onChange={(e) => {
+						setformData({ ...formData, title: e.target.value });
+						setDisable(false);
+					}}
 				/>
 				<TextField
 					name="message"
@@ -77,7 +86,10 @@ const Form = () => {
 					variant="outlined"
 					fullWidth
 					value={formData.message}
-					onChange={(e) => setformData({ ...formData, message: e.target.value })}
+					onChange={(e) => {
+						setformData({ ...formData, message: e.target.value });
+						setDisable(false);
+					}}
 				/>
 				<TextField
 					name="tags"
@@ -85,18 +97,21 @@ const Form = () => {
 					variant="outlined"
 					fullWidth
 					value={formData.tags}
-					onChange={(e) => setformData({ ...formData, tags: e.target.value })}
+					onChange={(e) => {
+						setformData({ ...formData, tags: e.target.value });
+						setDisable(false);
+					}}
 				/>
 				{/* <div className={classes.fileInput}>
 					<FileBase type="file" multiple={false} onDone={({ base64 }) => setformData({ ...formData, imageFile: base64 })} />
 				</div> */}
 				<div className={classes.fileInput}>
-					<input ref={fileRef} type="file" multiple={false} onChange={(e) => uploadImage(e)} />
+					<input ref={fileRef} type="file" multiple={false} onChange={(e) => uploadImage(e)} required />
 				</div>
-				<Button className={classes.buttonSubmit} variant="contained" color="primary" size="small" type="submit">
+				<Button className={classes.btnSubmit} variant="contained" color="primary" size="small" type="submit" disabled={disable}>
 					submit
 				</Button>
-				<Button className={classes.buttonSubmit} variant="outlined" color="secondary" size="small" onClick={clearForm}>
+				<Button className={classes.btnSubmit} variant="outlined" color="secondary" size="small" onClick={clearForm}>
 					clear
 				</Button>
 			</form>
