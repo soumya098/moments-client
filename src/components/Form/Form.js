@@ -72,7 +72,7 @@ const Form = ({ postId, setPostId }) => {
 	return (
 		<Paper className={classes.paper}>
 			<form className={`${classes.form} ${classes.root}`} onSubmit={handleSubmit}>
-				<Typography variant="h6">{formTitle} new Memories</Typography>
+				<Typography variant="h6">{formTitle} a Memory</Typography>
 				<TextField
 					name="creator"
 					label="Creator"

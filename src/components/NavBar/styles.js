@@ -1,8 +1,8 @@
 import { makeStyles } from "@material-ui/core/styles";
+import { deepPurple } from "@material-ui/core/colors";
 
 export default makeStyles((theme) => ({
 	[theme.breakpoints.down("sm")]: {
-		mainContainer: { flexDirection: "column-reverse !important" },
 		heading: { fontSize: "1.8rem !important" },
 		image: { maxWidth: "2.4rem !important" },
 	},
@@ -20,24 +20,44 @@ export default makeStyles((theme) => ({
 		padding: "6px",
 		display: "flex",
 		flexDirection: "row",
-		justifyContent: "center",
+		justifyContent: "space-between",
 		alignItems: "center",
+	},
+	brandContainer: {
+		display: "flex",
+		alignItems: "center",
+		padding: "0 16px",
 	},
 	heading: {
 		fontFamily: "'Sofia', 'sans-serif-italic'",
-		marginRight: "10px",
+		marginRight: "4px",
 		color: "#00b7ff",
+		textDecoration: "none",
 		// eslint-disable-next-line
-		["@media screen and (max-width: 228px)"]: {
-			display: "none",
+		["@media screen and (max-width: 340px)"]: {
+			fontSize: "1.3rem !important",
 		},
-	},
-	mainContainer: {
-		marginTop: theme.spacing(2),
 	},
 	image: {
 		maxWidth: "4rem",
 		height: "auto",
 		objectFit: "contain",
+	},
+	toolbar: {
+		display: "flex",
+		justifyContent: "flex-end",
+	},
+	profile: {
+		display: "flex",
+		justifyContent: "space-between",
+		width: "400px",
+	},
+	userName: {
+		display: "flex",
+		alignItems: "center",
+	},
+	purple: {
+		color: theme.palette.getContrastText(deepPurple[500]),
+		backgroundColor: deepPurple[500],
 	},
 }));
