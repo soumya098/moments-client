@@ -46,11 +46,14 @@ const Post = ({ post, setPostId }) => {
 				<Typography variant="body1" className={classes.title}>
 					{post.title}
 				</Typography>
+				<Typography variant="body2" color="textSecondary" className={classes.title} component="p">
+					{post.message}
+				</Typography>
 			</CardContent>
 			<CardActions className={classes.cardActions}>
 				<div>
-					<IconButton aria-label="like">
-						<ThumbUpIcon fontSize="small" onClick={handleLike} />
+					<IconButton aria-label="like" onClick={handleLike} color="primary">
+						<ThumbUpIcon fontSize="small" />
 					</IconButton>
 					Like {post.likeCount}
 				</div>

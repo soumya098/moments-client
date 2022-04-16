@@ -15,7 +15,7 @@ const Form = ({ postId, setPostId }) => {
 		creator: "",
 		title: "",
 		message: "",
-		tags: "",
+		tags: [],
 		imageFile: "",
 	});
 
@@ -36,7 +36,7 @@ const Form = ({ postId, setPostId }) => {
 			creator: "",
 			title: "",
 			message: "",
-			tags: "",
+			tags: [],
 			imageFile: "",
 		});
 		setDisable(true);
@@ -113,7 +113,7 @@ const Form = ({ postId, setPostId }) => {
 					fullWidth
 					value={formData.tags}
 					onChange={(e) => {
-						setformData({ ...formData, tags: e.target.value });
+						setformData({ ...formData, tags: e.target.value.split(",") });
 						setDisable(false);
 					}}
 				/>
