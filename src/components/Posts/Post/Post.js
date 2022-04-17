@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Card, CardActions, CardContent, CardMedia, Typography, IconButton } from "@material-ui/core";
-import ThumbUpIcon from "@material-ui/icons/ThumbUp";
+import { useLocation } from "react-router-dom";
+import { Card, CardActions, CardContent, CardMedia, Typography, IconButton, Button } from "@material-ui/core";
+import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
+import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import DeleteIcon from "@material-ui/icons/Delete";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import { deletePost, likePost } from "../../../actions/postsActionCreators";
@@ -11,34 +13,50 @@ import useStyles from "./styles";
 const Post = ({ post, setPostId }) => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
+	const location = useLocation();
+	const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
 
-	const handleDelete = (e) => {
-		e.preventDefault();
-		dispatch(deletePost(post._id));
-	};
+	useEffect(() => {
+		setUser(JSON.parse(localStorage.getItem("user")));
+	}, [location]);
 
-	const handleLike = (e) => {
-		e.preventDefault();
-		dispatch(likePost(post._id));
+	const Likes = () => {
+		if (post.likes.length > 0) {
+			return post.likes.find((like) => like === (user?.profile?.googleId || user?.profile?._id)) ? (
+				<>
+					<ThumbUpAltIcon fontSize="small" />
+					&nbsp;{post.likes.length > 1 ? `you and ${post.likes.length - 1} other` : `${post.likes.length}`}{" "}
+					{`like${post.likes.length > 1 ? `s` : ``}`}
+				</>
+			) : (
+				<>
+					<ThumbUpAltOutlinedIcon fontSize="small" />
+					&nbsp;{post.likes.length} {post.likes.length === 1 ? "like" : "likes"}
+				</>
+			);
+		}
+		return (
+			<>
+				<ThumbUpAltOutlinedIcon fontSize="small" />
+				&nbsp;Like
+			</>
+		);
 	};
 
 	return (
 		<Card className={classes.card}>
 			<CardMedia className={classes.media} image={post.imageFile} title={post.title} />
 			<div className={classes.overlay}>
-				<Typography variant="h6">{post.creator}</Typography>
+				<Typography variant="h6">{post.userName}</Typography>
 				<Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
 			</div>
-			<div className={classes.overlay2}>
-				<IconButton
-					style={{ color: "white" }}
-					onClick={() => {
-						setPostId(post._id);
-					}}
-				>
-					<MoreHorizIcon />
-				</IconButton>
-			</div>
+			{(user?.profile?._id === post.creator || user?.profile?.googleId === post.creator) && (
+				<div className={classes.overlay2}>
+					<IconButton style={{ color: "white" }} onClick={() => setPostId(post._id)}>
+						<MoreHorizIcon />
+					</IconButton>
+				</div>
+			)}
 			<CardContent className={classes.details}>
 				<Typography variant="body2" color="textSecondary">
 					{post.tags.map((tag) => `#${tag} `)}
@@ -52,14 +70,15 @@ const Post = ({ post, setPostId }) => {
 			</CardContent>
 			<CardActions className={classes.cardActions}>
 				<div>
-					<IconButton aria-label="like" onClick={handleLike} color="primary">
-						<ThumbUpIcon fontSize="small" />
-					</IconButton>
-					Like {post.likeCount}
+					<Button aria-label="like" onClick={() => dispatch(likePost(post._id))} color="primary" disabled={!user?.profile} size="small">
+						<Likes />
+					</Button>
 				</div>
-				<IconButton aria-label="delete" onClick={handleDelete}>
-					<DeleteIcon fontSize="small" />
-				</IconButton>
+				{(user?.profile?._id === post.creator || user?.profile?.googleId === post.creator) && (
+					<Button aria-label="delete" onClick={() => dispatch(deletePost(post._id))}>
+						<DeleteIcon fontSize="small" />
+					</Button>
+				)}
 			</CardActions>
 		</Card>
 	);

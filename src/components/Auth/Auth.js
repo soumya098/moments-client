@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "react-google-login";
+import { signUp, signIn } from "../../actions/authActionCreators";
 import { Container, Grid, Paper, Avatar, Button, Typography } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Input from "./Input";
 import Icon from "./Icon";
 import useStyles from "./styles";
+
+const initialState = { firstName: "", lastName: "", email: "", password: "", confirmPassword: "" };
 
 const Auth = () => {
 	const classes = useStyles();
@@ -14,11 +17,23 @@ const Auth = () => {
 	const navigate = useNavigate();
 	const [isSignUp, setIsSignUp] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
-	const [formData, setFormData] = useState({});
+	const [formData, setFormData] = useState(initialState);
 
 	const handleShowPassword = () => setShowPassword(!showPassword);
-	const handleChange = (e) => {};
-	const handleSubmit = (e) => {};
+
+	const handleChange = (e) => {
+		setFormData({ ...formData, [e.target.name]: e.target.value });
+	};
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+
+		if (isSignUp) {
+			dispatch(signUp(formData, navigate));
+		} else {
+			dispatch(signIn(formData, navigate));
+		}
+	};
 
 	const googleSuccess = async (res) => {
 		const profile = res?.profileObj;
@@ -47,21 +62,19 @@ const Auth = () => {
 					<Grid container spacing={2} alignItems="center">
 						{isSignUp && (
 							<>
-								<Input name="firstname" label="First Name" value={formData.firstname} onChange={handleChange} autoFocus half />
-
-								<Input name="lastname" label="Last Name" value={formData.lastname} onChange={handleChange} half />
+								<Input name="firstName" label="First Name" handleChange={handleChange} autoFocus half />
+								<Input name="lastName" label="Last Name" handleChange={handleChange} half />
 							</>
 						)}
-						<Input name="email" label="Email" value={formData.email} onChange={handleChange} type="email" />
+						<Input name="email" label="Email" handleChange={handleChange} type="email" />
 						<Input
 							name="password"
 							label="Password"
-							value={formData.password}
-							onChange={handleChange}
+							handleChange={handleChange}
 							type={showPassword ? "text" : "password"}
 							handleShowPassword={handleShowPassword}
 						/>
-						{isSignUp && <Input name="confirmPassword" label="Repeat Password" onChange={handleChange} type="password" />}
+						{isSignUp && <Input name="confirmPassword" label="Repeat Password" handleChange={handleChange} type="password" />}
 					</Grid>
 					<Button type="submit" fullWidth color="primary" className={classes.submit} variant="contained">
 						{isSignUp ? "Sign Up" : "Sign In"}

@@ -9,6 +9,9 @@ export default makeStyles((theme) => ({
 		"& .MuiOutlinedInput-input": {
 			padding: "14px !important",
 		},
+		"& .MuiOutlinedInput-multiline": {
+			padding: "0px !important",
+		},
 		"& .MuiInputLabel-formControl": {
 			top: "-3px",
 		},

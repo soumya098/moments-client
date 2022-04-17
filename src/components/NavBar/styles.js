@@ -56,11 +56,13 @@ export default makeStyles((theme) => ({
 		display: "flex",
 		alignItems: "center",
 		marginRight: "4px",
+		// eslint-disable-next-line
 		["@media screen and (max-width: 496px)"]: {
 			fontSize: ".7rem !important",
 		},
 	},
 	logout: {
+		// eslint-disable-next-line
 		["@media screen and (max-width: 496px)"]: {
 			fontSize: ".6rem !important",
 		},
@@ -69,6 +71,7 @@ export default makeStyles((theme) => ({
 		color: theme.palette.getContrastText(deepPurple[500]),
 		backgroundColor: deepPurple[500],
 		marginRight: "4px",
+		// eslint-disable-next-line
 		["@media screen and (max-width: 496px)"]: {
 			maxWidth: "2.4rem !important",
 		},

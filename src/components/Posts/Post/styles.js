@@ -34,9 +34,6 @@ export default makeStyles((theme) => ({
 		right: "5px",
 		color: "white",
 	},
-	grid: {
-		display: "flex",
-	},
 	details: {
 		display: "flex",
 		flexDirection: "column",

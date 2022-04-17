@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import decode from "jwt-decode";
 import { AppBar, Typography, Toolbar, Avatar, Button } from "@material-ui/core";
 import memories from "../../images/memories.png";
 import useStyles from "./styles";
@@ -12,17 +13,21 @@ export const Navbar = () => {
 	const location = useLocation();
 	const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
 
-	console.log(user);
-
 	useEffect(() => {
 		const token = user?.token;
+		if (token) {
+			const decodeToken = decode(token);
+			if (decodeToken.exp * 1000 < new Date().getTime()) {
+				logoutUser();
+			}
+		}
 		setUser(JSON.parse(localStorage.getItem("user")));
 	}, [location]);
 
 	const logoutUser = () => {
+		setUser(null);
 		dispatch({ type: "LOGOUT" });
 		navigate("/");
-		setUser(null);
 	};
 
 	return (

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { createPost, updatePost } from "../../actions/postsActionCreators";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
 // import FileBase from "react-file-base64";
@@ -9,10 +10,11 @@ const Form = ({ postId, setPostId }) => {
 	const classes = useStyles();
 	const fileRef = useRef();
 	const dispatch = useDispatch();
+	const location = useLocation();
+	const user = JSON.parse(localStorage.getItem("user"));
 
 	const [disable, setDisable] = useState(true);
 	const [formData, setformData] = useState({
-		creator: "",
 		title: "",
 		message: "",
 		tags: [],
@@ -28,12 +30,11 @@ const Form = ({ postId, setPostId }) => {
 			setDisable(false);
 			setformData(post);
 		}
-	}, [post]);
+	}, [post, location]);
 
 	const clearForm = () => {
 		fileRef.current.value = "";
 		setformData({
-			creator: "",
 			title: "",
 			message: "",
 			tags: [],
@@ -61,29 +62,28 @@ const Form = ({ postId, setPostId }) => {
 
 	const handleSubmit = (e) => {
 		if (postId) {
-			dispatch(updatePost(postId, formData));
+			dispatch(updatePost(postId, { ...formData, userName: user?.profile?.name }));
 		} else {
-			dispatch(createPost(formData));
+			dispatch(createPost({ ...formData, userName: user?.profile?.name }));
 		}
 		clearForm();
 		e.preventDefault();
 	};
 
+	if (!user?.profile?.name) {
+		return (
+			<Paper className={classes.paper}>
+				<Typography variant="h6" align="center">
+					Please Sign In to create your own memories and like others memories
+				</Typography>
+			</Paper>
+		);
+	}
+
 	return (
 		<Paper className={classes.paper}>
 			<form className={`${classes.form} ${classes.root}`} onSubmit={handleSubmit}>
 				<Typography variant="h6">{formTitle} a Memory</Typography>
-				<TextField
-					name="creator"
-					label="Creator"
-					variant="outlined"
-					fullWidth
-					value={formData.creator}
-					onChange={(e) => {
-						setformData({ ...formData, creator: e.target.value });
-						setDisable(false);
-					}}
-				/>
 				<TextField
 					name="title"
 					label="Title"
@@ -100,6 +100,8 @@ const Form = ({ postId, setPostId }) => {
 					label="Message"
 					variant="outlined"
 					fullWidth
+					multiline
+					rows={4}
 					value={formData.message}
 					onChange={(e) => {
 						setformData({ ...formData, message: e.target.value });
