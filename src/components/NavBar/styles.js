@@ -26,7 +26,7 @@ export default makeStyles((theme) => ({
 	brandContainer: {
 		display: "flex",
 		alignItems: "center",
-		padding: "0 16px",
+		padding: "0 0 0 8px",
 	},
 	heading: {
 		fontFamily: "'Sofia', 'sans-serif-italic'",
@@ -34,8 +34,8 @@ export default makeStyles((theme) => ({
 		color: "#00b7ff",
 		textDecoration: "none",
 		// eslint-disable-next-line
-		["@media screen and (max-width: 340px)"]: {
-			fontSize: "1.3rem !important",
+		["@media screen and (max-width: 496px)"]: {
+			fontSize: "1.2rem !important",
 		},
 	},
 	image: {
@@ -50,14 +50,27 @@ export default makeStyles((theme) => ({
 	profile: {
 		display: "flex",
 		justifyContent: "space-between",
-		width: "400px",
+		alignItems: "center",
 	},
 	userName: {
 		display: "flex",
 		alignItems: "center",
+		marginRight: "4px",
+		["@media screen and (max-width: 496px)"]: {
+			fontSize: ".7rem !important",
+		},
+	},
+	logout: {
+		["@media screen and (max-width: 496px)"]: {
+			fontSize: ".6rem !important",
+		},
 	},
 	purple: {
 		color: theme.palette.getContrastText(deepPurple[500]),
 		backgroundColor: deepPurple[500],
+		marginRight: "4px",
+		["@media screen and (max-width: 496px)"]: {
+			maxWidth: "2.4rem !important",
+		},
 	},
 }));
