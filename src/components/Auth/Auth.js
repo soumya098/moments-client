@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "react-google-login";
@@ -18,6 +18,13 @@ const Auth = () => {
 	const [isSignUp, setIsSignUp] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
 	const [formData, setFormData] = useState(initialState);
+	const user = JSON.parse(localStorage.getItem("user"));
+
+	useEffect(() => {
+		if (user) {
+			navigate("/");
+		}
+	}, []);
 
 	const handleShowPassword = () => setShowPassword(!showPassword);
 
