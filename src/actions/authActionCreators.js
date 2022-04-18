@@ -9,6 +9,8 @@ export const signUp = (formData, navigate) => async (dispatch) => {
 		navigate("/");
 	} catch (error) {
 		console.log(error);
+		alert(error.response.data.message);
+		window.location.reload();
 	}
 };
 
@@ -19,6 +21,8 @@ export const signIn = (formData, navigate) => async (dispatch) => {
 		dispatch(action);
 		navigate("/");
 	} catch (error) {
-		console.log(error);
+		console.log(error.response.data);
+		alert(error.response.data.message);
+		window.location.reload();
 	}
 };

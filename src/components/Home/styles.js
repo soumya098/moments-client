@@ -7,4 +7,8 @@ export default makeStyles((theme) => ({
 	mainContainer: {
 		marginTop: theme.spacing(2),
 	},
+	pagination: {
+		marginTop: theme.spacing(2),
+		padding: theme.spacing(1),
+	},
 }));

@@ -101,7 +101,7 @@ const Form = ({ postId, setPostId }) => {
 					variant="outlined"
 					fullWidth
 					multiline
-					rows={4}
+					minRows={4}
 					value={formData.message}
 					onChange={(e) => {
 						setformData({ ...formData, message: e.target.value });

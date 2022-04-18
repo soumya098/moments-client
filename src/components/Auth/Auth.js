@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "react-google-login";
@@ -18,15 +18,6 @@ const Auth = () => {
 	const [isSignUp, setIsSignUp] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
 	const [formData, setFormData] = useState(initialState);
-	const user = JSON.parse(localStorage.getItem("user"));
-
-	useEffect(() => {
-		if (user) {
-			navigate("/");
-		}
-	}, []);
-
-	const handleShowPassword = () => setShowPassword(!showPassword);
 
 	const handleChange = (e) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -79,7 +70,7 @@ const Auth = () => {
 							label="Password"
 							handleChange={handleChange}
 							type={showPassword ? "text" : "password"}
-							handleShowPassword={handleShowPassword}
+							handleShowPassword={() => setShowPassword(!showPassword)}
 						/>
 						{isSignUp && <Input name="confirmPassword" label="Repeat Password" handleChange={handleChange} type="password" />}
 					</Grid>
