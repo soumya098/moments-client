@@ -7,7 +7,7 @@ import useStyles from "./styles";
 const Posts = ({ setPostId }) => {
 	const classes = useStyles();
 	const posts = useSelector((store) => store.posts);
-  
+
 	const renderPosts = posts.map((post) => (
 		<Grid item key={post._id} xs={12} sm={6}>
 			<Post post={post} setPostId={setPostId} />

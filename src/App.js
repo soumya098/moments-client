@@ -8,10 +8,10 @@ import Auth from "./components/Auth/Auth";
 
 const App = () => {
 	const user = JSON.parse(localStorage.getItem("user"));
-  
+
 	return (
 		<BrowserRouter>
-			<Container maxWidth="xl">
+			<Container>
 				<Navbar />
 				<Routes>
 					<Route path="/" element={<Navigate replace={true} to="/posts" />} />

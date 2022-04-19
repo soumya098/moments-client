@@ -3,24 +3,24 @@ import { deepPurple } from "@material-ui/core/colors";
 
 export default makeStyles((theme) => ({
 	[theme.breakpoints.down("sm")]: {
-		heading: { fontSize: "1.8rem !important" },
-		image: { maxWidth: "2.4rem !important" },
+		heading: { fontSize: "1.4rem !important" },
+		image: { maxWidth: "2.2rem !important" },
 	},
 	[theme.breakpoints.only("sm")]: {
-		heading: { fontSize: "2.2rem" },
-		image: { maxWidth: "2.8rem !important" },
+		heading: { fontSize: "1.8rem" },
+		image: { maxWidth: "2.5rem !important" },
 	},
-	[theme.breakpoints.only("md")]: {
-		heading: { fontSize: "2.6rem" },
-		image: { maxWidth: "3.4rem !important" },
+	[theme.breakpoints.up("md")]: {
+		heading: { fontSize: "1.8rem" },
+		image: { maxWidth: "3rem !important" },
 	},
 	appBar: {
 		borderRadius: 15,
 		margin: "10px 0",
-		padding: "6px",
+		padding: "0px",
 		display: "flex",
 		flexDirection: "row",
-		justifyContent: "space-between",
+		justifyContent: "space-around",
 		alignItems: "center",
 	},
 	brandContainer: {
@@ -35,20 +35,23 @@ export default makeStyles((theme) => ({
 		textDecoration: "none",
 		// eslint-disable-next-line
 		["@media screen and (max-width: 496px)"]: {
-			fontSize: "1.2rem !important",
+			fontSize: "1rem !important",
 		},
 	},
 	image: {
-		maxWidth: "4rem",
+		maxWidth: "3rem",
 		height: "auto",
 		objectFit: "contain",
 	},
 	toolbar: {
 		display: "flex",
-		justifyContent: "flex-end",
+		flexDirection: "row",
+		// justifyContent: "flex-end",
 	},
 	profile: {
 		display: "flex",
+		flex: "100%",
+		flexDirection: "row",
 		justifyContent: "space-between",
 		alignItems: "center",
 	},

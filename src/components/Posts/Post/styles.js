@@ -2,9 +2,9 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export default makeStyles((theme) => ({
 	media: {
-		height: 0,
+		height: 50,
 		paddingTop: "56.25%", // 16:9
-		backgroundColor: "rgba(0, 0, 0, 0.4)",
+		backgroundColor: "rgba(0, 0, 0, 0.5)",
 		backgroundBlendMode: "darken",
 	},
 	border: {
@@ -24,21 +24,21 @@ export default makeStyles((theme) => ({
 	},
 	overlay: {
 		position: "absolute",
-		top: "10px",
-		left: "15px",
+		top: "15px",
+		left: "25px",
 		color: "white",
 	},
 	overlay2: {
 		position: "absolute",
-		top: "5px",
-		right: "5px",
+		top: "15px",
+		right: "15px",
 		color: "white",
 	},
 	details: {
 		display: "flex",
 		flexDirection: "column",
 		justifyContent: "space-between",
-		padding: theme.spacing(1),
+		padding: "2px 8px",
 	},
 	title: {
 		padding: "2px 10px",
@@ -47,5 +47,9 @@ export default makeStyles((theme) => ({
 		padding: "0px 8px 4px",
 		display: "flex",
 		justifyContent: "space-between",
+		alignItems: "center",
+	},
+	likes: {
+		fontSize: ".8rem",
 	},
 }));
