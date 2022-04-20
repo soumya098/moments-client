@@ -9,6 +9,7 @@ import * as actionTypes from "./actionTypes";
 
 // Here we using reduc-thunk to create asyncrhonous action
 export const getPosts = () => async (dispatch) => {
+	console.log("here in getPosts");
 	try {
 		const { data } = await api.fetchPosts();
 		const action = { type: actionTypes.FETCH_ALL, payload: data };
@@ -19,9 +20,11 @@ export const getPosts = () => async (dispatch) => {
 };
 
 export const getPostsBySearch = (searchQuery) => async (dispatch) => {
+	console.log("here in getPosts by search query");
 	try {
 		const { data } = await api.fetchPostsBySearch(searchQuery);
-		console.log(data);
+		const action = { type: actionTypes.FETCH_BY_SEARCH, payload: data };
+		dispatch(action);
 	} catch (error) {
 		console.log(error);
 	}

@@ -17,11 +17,15 @@ export default makeStyles((theme) => ({
 	appBar: {
 		borderRadius: 15,
 		margin: "10px 0",
-		padding: "0px",
+		padding: "0px 16px",
 		display: "flex",
 		flexDirection: "row",
-		justifyContent: "space-around",
+		justifyContent: "space-between",
 		alignItems: "center",
+		[theme.breakpoints.down("xs")]: {
+			flexDirection: "column",
+			padding: "10px",
+		},
 	},
 	brandContainer: {
 		display: "flex",
@@ -33,10 +37,6 @@ export default makeStyles((theme) => ({
 		marginRight: "4px",
 		color: "#00b7ff",
 		textDecoration: "none",
-		// eslint-disable-next-line
-		["@media screen and (max-width: 496px)"]: {
-			fontSize: "1rem !important",
-		},
 	},
 	image: {
 		maxWidth: "3rem",
@@ -44,13 +44,17 @@ export default makeStyles((theme) => ({
 		objectFit: "contain",
 	},
 	toolbar: {
+		width: "40%",
 		display: "flex",
 		flexDirection: "row",
-		// justifyContent: "flex-end",
+		justifyContent: "flex-end",
+		[theme.breakpoints.down("xs")]: {
+			width: "60%",
+		},
 	},
 	profile: {
 		display: "flex",
-		flex: "100%",
+		flex: 1,
 		flexDirection: "row",
 		justifyContent: "space-between",
 		alignItems: "center",
@@ -59,24 +63,10 @@ export default makeStyles((theme) => ({
 		display: "flex",
 		alignItems: "center",
 		marginRight: "4px",
-		// eslint-disable-next-line
-		["@media screen and (max-width: 496px)"]: {
-			fontSize: ".7rem !important",
-		},
-	},
-	logout: {
-		// eslint-disable-next-line
-		["@media screen and (max-width: 496px)"]: {
-			fontSize: ".6rem !important",
-		},
 	},
 	purple: {
 		color: theme.palette.getContrastText(deepPurple[500]),
 		backgroundColor: deepPurple[500],
 		marginRight: "4px",
-		// eslint-disable-next-line
-		["@media screen and (max-width: 496px)"]: {
-			maxWidth: "2.4rem !important",
-		},
 	},
 }));

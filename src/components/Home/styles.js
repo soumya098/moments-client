@@ -26,7 +26,7 @@ export default makeStyles((theme) => ({
 		"& .MuiInputLabel-formControl": {
 			top: "-4px",
 		},
-		"& .WAMuiChipInput-inputRoot-21.WAMuiChipInput-outlined-24": {
+		"& .MuiOutlinedInput-root": {
 			paddingTop: "5px !important",
 		},
 	},

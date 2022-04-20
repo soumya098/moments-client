@@ -6,6 +6,8 @@ const postsReducer = (posts = initialState, action) => {
 	switch (action.type) {
 		case actionTypes.FETCH_ALL:
 			return action.payload;
+		case actionTypes.FETCH_BY_SEARCH:
+			return action.payload;
 		case actionTypes.CREATE:
 			return [...posts, action.payload];
 		case actionTypes.UPDATE:

@@ -9,13 +9,13 @@ const Posts = ({ setPostId }) => {
 	const posts = useSelector((store) => store.posts);
 
 	const renderPosts = posts.map((post) => (
-		<Grid item key={post._id} xs={12} sm={6}>
+		<Grid item key={post._id} xs={12} sm={12} md={6} lg={3}>
 			<Post post={post} setPostId={setPostId} />
 		</Grid>
 	));
 
 	return posts.length ? (
-		<Grid container className={classes.mainContainer} spacing={2} alignItems="stretch">
+		<Grid container className={classes.mainContainer} spacing={1} alignItems="stretch">
 			{renderPosts}
 		</Grid>
 	) : (

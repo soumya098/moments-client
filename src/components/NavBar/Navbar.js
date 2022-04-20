@@ -3,8 +3,9 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import decode from "jwt-decode";
 import { AppBar, Typography, Toolbar, Avatar, Button } from "@material-ui/core";
-import memories from "../../images/memories.png";
 import useStyles from "./styles";
+import memoriesLogo from "../../images/memories-Logo.png";
+import memoriesText from "../../images/memories-Text.png";
 
 export const Navbar = () => {
 	const classes = useStyles();
@@ -32,12 +33,10 @@ export const Navbar = () => {
 
 	return (
 		<AppBar position="static" color="inherit" className={classes.appBar}>
-			<div className={classes.brandContainer}>
-				<Typography variant="h3" align="center" className={classes.heading} component={Link} to="/">
-					Memories
-				</Typography>
-				<img src={memories} alt="memories" className={classes.image} />
-			</div>
+			<Link to="/" className={classes.brandContainer}>
+				<img src={memoriesText} alt="memories" height="40px" />
+				<img src={memoriesLogo} alt="memories" className={classes.image} />
+			</Link>
 			<Toolbar className={classes.toolbar}>
 				{user ? (
 					<div className={classes.profile}>
@@ -47,7 +46,7 @@ export const Navbar = () => {
 						<Typography className={classes.userName} variant="body2">
 							{user.profile.name}
 						</Typography>
-						<Button variant="contained" color="secondary" onClick={logoutUser} size="small" className={classes.logout}>
+						<Button variant="contained" color="secondary" onClick={logoutUser} size="small">
 							log out
 						</Button>
 					</div>

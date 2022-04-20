@@ -10,14 +10,15 @@ import Form from "../Form/Form";
 import useStyles from "./styles";
 
 function useQuery() {
-	return new URLSearchParams(useLocation().search);
+	return new URLSearchParams(useLocation());
 }
 
 export const Home = () => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
-	const query = useQuery();
 	const navigate = useNavigate();
+	const location = useLocation();
+	const query = useQuery();
 
 	const [postId, setPostId] = useState(null);
 	const [search, setSearch] = useState("");
@@ -25,6 +26,9 @@ export const Home = () => {
 
 	const page = query.get("page") || 1;
 	const searchQuery = query.get("search");
+
+	console.log(location);
+	console.log(searchQuery);
 
 	useEffect(() => {
 		dispatch(getPosts());
@@ -36,16 +40,10 @@ export const Home = () => {
 		}
 	};
 
-	const handleAdd = (tag) => {
-		setTags([...tags, tag]);
-	};
-	const handleDelete = (tagToDelete) => {
-		setTags(tags.filter((t) => t !== tagToDelete));
-	};
-
 	const searchPost = () => {
-		if (search.trim()) {
+		if (search.trim() || tags.length > 0) {
 			dispatch(getPostsBySearch({ search: search, tags: tags.join(",") }));
+			navigate(`/posts/search?q=${search || "none"}&tags=${tags.join(",")}`);
 		} else {
 			navigate("/");
 		}
@@ -55,10 +53,10 @@ export const Home = () => {
 		<Grow in>
 			<Container maxWidth="xl">
 				<Grid container justifyContent="space-between" alignItems="stretch" spacing={2} className={classes.mainContainer}>
-					<Grid item xs={12} sm={6} md={9}>
+					<Grid item xs={12} sm={6} md={8}>
 						<Posts setPostId={setPostId} />
 					</Grid>
-					<Grid item xs={12} sm={6} md={3}>
+					<Grid item xs={12} sm={6} md={4}>
 						<AppBar className={classes.appBarSearch} position="static" color="inherit">
 							<TextField
 								name="search"
@@ -74,8 +72,8 @@ export const Home = () => {
 								value={tags}
 								label="Search Tags"
 								variant="outlined"
-								onAdd={handleAdd}
-								onDelete={handleDelete}
+								onAdd={(tag) => setTags([...tags, tag])}
+								onDelete={(tagToDelete) => setTags(tags.filter((t) => t !== tagToDelete))}
 							/>
 							<Button className={classes.searchBtn} color="primary" onClick={searchPost} variant="outlined" size="small">
 								Search
