@@ -75,9 +75,11 @@ export const Home = () => {
 							</Button>
 						</AppBar>
 						<Form postId={postId} setPostId={setPostId} />
-						<Paper className={classes.pagination} elevation={6}>
-							<Paginate page={page} />
-						</Paper>
+						{(!searchQuery || !tags.length) && (
+							<Paper className={classes.pagination} elevation={6}>
+								<Paginate page={page} />
+							</Paper>
+						)}
 					</Grid>
 				</Grid>
 			</Container>

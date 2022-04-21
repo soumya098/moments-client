@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 export default makeStyles((theme) => ({
 	root: {
 		"& .MuiTextField-root": {
-			margin: theme.spacing(1),
+			margin: "6px 8px",
 			padding: "0px !important",
 		},
 		"& .MuiOutlinedInput-input": {
@@ -17,7 +17,7 @@ export default makeStyles((theme) => ({
 		},
 	},
 	paper: {
-		padding: theme.spacing(2),
+		padding: theme.spacing(1),
 	},
 	form: {
 		display: "flex",
@@ -26,9 +26,9 @@ export default makeStyles((theme) => ({
 	},
 	fileInput: {
 		width: "97%",
-		margin: "10px 0",
+		marginTop: "6px",
 	},
 	btnSubmit: {
-		margin: 10,
+		margin: "10px 16px 0px",
 	},
 }));

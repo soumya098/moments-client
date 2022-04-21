@@ -81,7 +81,7 @@ const Form = ({ postId, setPostId }) => {
 	}
 
 	return (
-		<Paper className={classes.paper}>
+		<Paper className={classes.paper} elevation={6}>
 			<form className={`${classes.form} ${classes.root}`} onSubmit={handleSubmit}>
 				<Typography variant="h6">{formTitle} a Memory</Typography>
 				<TextField
@@ -123,7 +123,7 @@ const Form = ({ postId, setPostId }) => {
 					<FileBase type="file" multiple={false} onDone={({ base64 }) => setformData({ ...formData, imageFile: base64 })} />
 				</div> */}
 				<div className={classes.fileInput}>
-					<input ref={fileRef} type="file" multiple={false} onChange={(e) => uploadImage(e)} />
+					<input ref={fileRef} type="file" multiple={false} onChange={(e) => uploadImage(e)} required />
 				</div>
 				<Button className={classes.btnSubmit} variant="contained" color="primary" size="small" type="submit" disabled={disable}>
 					{formTitle}
