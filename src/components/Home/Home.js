@@ -1,23 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Container, Grow, Grid, Paper, Button, AppBar, TextField } from "@material-ui/core";
 import ChipInput from "material-ui-chip-input";
-import { getPosts, getPostsBySearch } from "../../actions/postsActionCreators";
+import { getPostsBySearch } from "../../actions/postsActionCreators";
 import Paginate from "../pagination";
 import Posts from "../Posts/Posts";
 import Form from "../Form/Form";
 import useStyles from "./styles";
 
 function useQuery() {
-	return new URLSearchParams(useLocation());
+	return new URLSearchParams(useLocation().search);
 }
 
 export const Home = () => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const location = useLocation();
 	const query = useQuery();
 
 	const [postId, setPostId] = useState(null);
@@ -25,14 +24,10 @@ export const Home = () => {
 	const [tags, setTags] = useState([]);
 
 	const page = query.get("page") || 1;
-	const searchQuery = query.get("search");
+	const searchQuery = query.get("q");
 
-	console.log(location);
-	console.log(searchQuery);
-
-	useEffect(() => {
-		dispatch(getPosts());
-	}, [dispatch]);
+	// console.log(page);
+	// console.log(searchQuery);
 
 	const handleKeyDown = (e) => {
 		if (e.keyCode === 13) {
@@ -81,7 +76,7 @@ export const Home = () => {
 						</AppBar>
 						<Form postId={postId} setPostId={setPostId} />
 						<Paper className={classes.pagination} elevation={6}>
-							<Paginate />
+							<Paginate page={page} />
 						</Paper>
 					</Grid>
 				</Grid>

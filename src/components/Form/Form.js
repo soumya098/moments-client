@@ -22,7 +22,7 @@ const Form = ({ postId, setPostId }) => {
 	});
 
 	const [formTitle, setFormTitle] = useState("Create");
-	const post = useSelector((store) => (postId ? store.posts.find((p) => p._id === postId) : null));
+	const post = useSelector((store) => (postId ? store.posts.posts.find((p) => p._id === postId) : null));
 
 	useEffect(() => {
 		if (post) {
