@@ -1,6 +1,6 @@
 import * as actionTypes from "../actions/actionTypes.js";
 
-const initialState = { posts: [], currPage: 0, totalPages: 0, isLoading: true };
+const initialState = { posts: [], post: {}, currPage: 0, totalPages: 0, isLoading: true };
 
 const postsReducer = (state = initialState, action) => {
 	switch (action.type) {
@@ -10,6 +10,8 @@ const postsReducer = (state = initialState, action) => {
 			return { ...state, isLoading: false };
 		case actionTypes.FETCH_ALL:
 			return { ...state, posts: action.payload.posts, currPage: action.payload.currPage, totalPages: action.payload.totalPages };
+		case actionTypes.FETCH_ONE:
+			return { ...state, post: action.payload };
 		case actionTypes.FETCH_BY_SEARCH:
 			return { ...state, posts: action.payload };
 		case actionTypes.CREATE:

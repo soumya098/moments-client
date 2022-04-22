@@ -48,8 +48,8 @@ export default makeStyles((theme) => ({
 		display: "flex",
 		flexDirection: "row",
 		justifyContent: "flex-end",
-		[theme.breakpoints.down("xs")]: {
-			width: "60%",
+		[theme.breakpoints.down("sm")]: {
+			width: "auto",
 		},
 	},
 	profile: {
@@ -58,15 +58,20 @@ export default makeStyles((theme) => ({
 		flexDirection: "row",
 		justifyContent: "space-between",
 		alignItems: "center",
+		[theme.breakpoints.down("sm")]: {
+			width: "auto",
+			justifyContent: "center",
+		},
 	},
 	userName: {
 		display: "flex",
 		alignItems: "center",
-		marginRight: "4px",
+		textAlign: "center",
+		marginRight: "8px",
 	},
 	purple: {
 		color: theme.palette.getContrastText(deepPurple[500]),
 		backgroundColor: deepPurple[500],
-		marginRight: "4px",
+		marginRight: "8px",
 	},
 }));

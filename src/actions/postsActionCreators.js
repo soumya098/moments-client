@@ -14,7 +14,6 @@ export const getPosts = (page) => async (dispatch) => {
 		const { data } = await api.fetchPosts(page);
 		const action = { type: actionTypes.FETCH_ALL, payload: data };
 		dispatch(action);
-		console.log("is loading false");
 	} catch (error) {
 		console.log(error);
 	}
@@ -26,6 +25,18 @@ export const getPostsBySearch = (searchQuery) => async (dispatch) => {
 	try {
 		const { data } = await api.fetchPostsBySearch(searchQuery);
 		const action = { type: actionTypes.FETCH_BY_SEARCH, payload: data };
+		dispatch(action);
+	} catch (error) {
+		console.log(error);
+	}
+	dispatch({ type: actionTypes.END_LOADING });
+};
+
+export const getPost = (id) => async (dispatch) => {
+	dispatch({ type: actionTypes.START_LOADING });
+	try {
+		const { data } = await api.fetchPost(id);
+		const action = { type: actionTypes.FETCH_ONE, payload: data };
 		dispatch(action);
 	} catch (error) {
 		console.log(error);

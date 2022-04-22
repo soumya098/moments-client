@@ -24,15 +24,16 @@ export default makeStyles((theme) => ({
 	},
 	overlay: {
 		position: "absolute",
-		top: "15px",
-		left: "25px",
+		top: "5px",
+		left: "10px",
 		color: "white",
 	},
 	overlay2: {
 		position: "absolute",
-		top: "15px",
-		right: "15px",
+		top: "0px",
+		right: "0px",
 		color: "white",
+		zIndex: 1000,
 	},
 	details: {
 		display: "flex",

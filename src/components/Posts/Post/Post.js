@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
-import { Card, CardActions, CardContent, CardMedia, Typography, IconButton } from "@material-ui/core";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Card, CardActions, CardContent, CardMedia, Typography, IconButton, CardActionArea } from "@material-ui/core";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -14,6 +14,7 @@ const Post = ({ post, setPostId }) => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const location = useLocation();
+	const navigate = useNavigate();
 	const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
 
 	useEffect(() => {
@@ -47,32 +48,44 @@ const Post = ({ post, setPostId }) => {
 		return <span className={classes.likes}>&nbsp;Like</span>;
 	};
 
+	const openPost = () => {
+		navigate(`/posts/${post._id}`);
+	};
+
 	return (
 		<Card className={classes.card} elevation={6}>
-			<CardMedia className={classes.media} image={post.imageFile} title={post.title} />
-			<div className={classes.overlay}>
-				<Typography variant="h6" style={{ fontSize: "1.2rem" }}>
-					{post.userName}
-				</Typography>
-				<Typography variant="body2" style={{ fontSize: ".7rem" }}>
-					{moment(post.createdAt).fromNow()}
-				</Typography>
-			</div>
+			<CardActionArea className={classes.cardAction} onClick={openPost}>
+				<CardMedia className={classes.media} image={post.imageFile} title={post.title} />
+				<div className={classes.overlay}>
+					<Typography variant="h6" style={{ fontSize: "1.2rem" }}>
+						{post.userName}
+					</Typography>
+					<Typography variant="body2" style={{ fontSize: ".7rem" }}>
+						{moment(post.createdAt).fromNow()}
+					</Typography>
+				</div>
+				<CardContent className={classes.details}>
+					<Typography variant="body2" color="textSecondary">
+						{post.tags.map((tag) => `#${tag} `)}
+					</Typography>
+					<Typography variant="body1" className={classes.title}>
+						{post.title}
+					</Typography>
+				</CardContent>
+			</CardActionArea>
 			{(user?.profile?._id === post.creator || user?.profile?.googleId === post.creator) && (
 				<div className={classes.overlay2}>
-					<IconButton style={{ color: "white" }} onClick={() => setPostId(post._id)}>
+					<IconButton
+						style={{ color: "white" }}
+						onClick={(e) => {
+							e.stopPropagation();
+							setPostId(post._id);
+						}}
+					>
 						<MoreHorizIcon />
 					</IconButton>
 				</div>
 			)}
-			<CardContent className={classes.details}>
-				<Typography variant="body2" color="textSecondary">
-					{post.tags.map((tag) => `#${tag} `)}
-				</Typography>
-				<Typography variant="body1" className={classes.title}>
-					{post.title}
-				</Typography>
-			</CardContent>
 			<CardActions className={classes.cardActions}>
 				<div style={{ display: "flex", alignItems: "center" }}>
 					<IconButton aria-label="like" onClick={() => dispatch(likePost(post._id))} color="primary" disabled={!user?.profile}>
