@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { createPost, updatePost } from "../../actions/postsActionCreators";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
 // import FileBase from "react-file-base64";
@@ -11,6 +11,7 @@ const Form = ({ postId, setPostId }) => {
 	const fileRef = useRef();
 	const dispatch = useDispatch();
 	const location = useLocation();
+	const navigate = useNavigate();
 	const user = JSON.parse(localStorage.getItem("user"));
 
 	const [disable, setDisable] = useState(true);
@@ -64,7 +65,7 @@ const Form = ({ postId, setPostId }) => {
 		if (postId) {
 			dispatch(updatePost(postId, { ...formData, userName: user?.profile?.name }));
 		} else {
-			dispatch(createPost({ ...formData, userName: user?.profile?.name }));
+			dispatch(createPost({ ...formData, userName: user?.profile?.name }, navigate));
 		}
 		clearForm();
 		e.preventDefault();
@@ -123,7 +124,7 @@ const Form = ({ postId, setPostId }) => {
 					<FileBase type="file" multiple={false} onDone={({ base64 }) => setformData({ ...formData, imageFile: base64 })} />
 				</div> */}
 				<div className={classes.fileInput}>
-					<input ref={fileRef} type="file" multiple={false} onChange={(e) => uploadImage(e)} required />
+					<input ref={fileRef} type="file" multiple={false} onChange={(e) => uploadImage(e)} />
 				</div>
 				<Button className={classes.btnSubmit} variant="contained" color="primary" size="small" type="submit" disabled={disable}>
 					{formTitle}

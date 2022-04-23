@@ -44,10 +44,11 @@ export const getPost = (id) => async (dispatch) => {
 	dispatch({ type: actionTypes.END_LOADING });
 };
 
-export const createPost = (post) => async (dispatch) => {
+export const createPost = (post, navigate) => async (dispatch) => {
 	dispatch({ type: actionTypes.START_LOADING });
 	try {
 		const { data } = await api.createPost(post);
+		navigate(`/posts/${data._id}`);
 		const action = { type: actionTypes.CREATE, payload: data };
 		dispatch(action);
 	} catch (error) {

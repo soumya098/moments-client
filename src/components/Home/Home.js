@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Container, Grow, Grid, Paper, Button, AppBar, TextField } from "@material-ui/core";
@@ -25,15 +25,20 @@ export const Home = () => {
 
 	const page = query.get("page") || 1;
 	const searchQuery = query.get("q");
-
-	// console.log(page);
-	// console.log(searchQuery);
+	const searchTags = query.get("tags");
+	// console.log(searchQuery, searchTags);
 
 	const handleKeyDown = (e) => {
 		if (e.keyCode === 13) {
 			searchPost();
 		}
 	};
+
+	useEffect(() => {
+		if (searchQuery || searchTags) {
+			dispatch(getPostsBySearch({ search: searchQuery, tags: searchTags }));
+		}
+	}, []);
 
 	const searchPost = () => {
 		if (search.trim() || tags.length > 0) {
@@ -75,7 +80,7 @@ export const Home = () => {
 							</Button>
 						</AppBar>
 						<Form postId={postId} setPostId={setPostId} />
-						{(!searchQuery || !tags.length) && (
+						{!searchQuery && !searchTags && (
 							<Paper className={classes.pagination} elevation={6}>
 								<Paginate page={page} />
 							</Paper>

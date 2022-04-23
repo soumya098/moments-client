@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getPost } from "../../actions/postsActionCreators";
+import { getPost, getPostsBySearch } from "../../actions/postsActionCreators";
 import { useParams, useNavigate } from "react-router-dom";
 import { Paper, Typography, CircularProgress, Divider } from "@material-ui/core";
 import moment from "moment";
@@ -18,12 +18,25 @@ const PostDetails = () => {
 		dispatch(getPost(id));
 	}, [id]);
 
-	if (!isLoading && Object.keys(post).length === 0)
+	useEffect(() => {
+		if (Object.keys(post).length !== 0) {
+			dispatch(getPostsBySearch({ search: "none", tags: post.tags.join(",") }));
+		}
+	}, [post]);
+
+	if (!isLoading && Object.keys(post).length === 0) {
 		return (
 			<Paper className={classes.loadingPaper} elevation={6}>
 				<Typography>No Post Found</Typography>
 			</Paper>
 		);
+	}
+
+	const recommendedPosts = posts.filter((p) => p._id !== post._id);
+
+	const openPost = (id) => {
+		navigate(`/posts/${id}`);
+	};
 
 	return !isLoading ? (
 		<Paper style={{ padding: "20px", borderRadius: "15px" }} elevation={6}>
@@ -58,7 +71,33 @@ const PostDetails = () => {
 					/>
 				</div>
 			</div>
-			{/* logic for recommendedPosts */}
+			{recommendedPosts.length && (
+				<div>
+					<Typography variant="h5" gutterBottom>
+						you might also like:
+					</Typography>
+					<Divider />
+					<div className={classes.recommendedPosts}>
+						{recommendedPosts.map((p) => (
+							<div style={{ margin: "20px", cursor: "pointer" }} onClick={() => openPost(p._id)} key={p._id}>
+								<Typography variant="h6" gutterBottom>
+									{p.title}
+								</Typography>
+								<Typography variant="subtitle2" gutterBottom>
+									{p.userName}
+								</Typography>
+								<Typography variant="subtitle2" gutterBottom>
+									{p.message}
+								</Typography>
+								<Typography variant="subtitle1" gutterBottom>
+									{p.likes.length} Likes
+								</Typography>
+								<img src={p.imageFile} alt={p.title} width="200px" />
+							</div>
+						))}
+					</div>
+				</div>
+			)}
 		</Paper>
 	) : (
 		<Paper className={classes.loadingPaper} elevation={6}>
