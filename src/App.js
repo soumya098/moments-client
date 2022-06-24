@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Container } from "@material-ui/core";
 import Navbar from "./components/NavBar/Navbar";
@@ -7,7 +7,11 @@ import PostDetail from "./components/PostsDetails/PostDetails";
 import Auth from "./components/Auth/Auth";
 
 const App = () => {
-	const user = JSON.parse(localStorage.getItem("user"));
+	const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+
+	useEffect(() => {
+		setUser(JSON.parse(localStorage.getItem("user")));
+	}, []);
 
 	return (
 		<BrowserRouter>
@@ -18,7 +22,7 @@ const App = () => {
 					<Route path="/posts" exact element={<Home />} />
 					<Route path="/posts/search" exact element={<Home />} />
 					<Route path="/posts/:id" exact element={<PostDetail />} />
-					<Route path="/auth" element={!user ? <Auth /> : <Navigate replace={true} to="/posts" />} />
+					<Route path="/auth" element={!user ? <Auth /> : <Navigate replace={false} to="/posts" />} />
 				</Routes>
 			</Container>
 		</BrowserRouter>
